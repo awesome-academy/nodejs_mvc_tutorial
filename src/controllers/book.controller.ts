@@ -9,7 +9,11 @@ const index = asyncHandler(
 
 const bookList = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    res.send("book list");
+    res.render("index", {
+      title: "Sun Asterisk",
+      message: "Make awesome things that matter",
+      i18n: res.locals,
+    });
   }
 );
 

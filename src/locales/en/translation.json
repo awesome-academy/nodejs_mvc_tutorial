@@ -1,0 +1,15 @@
+{
+  "home": {
+    "title": "Local library",
+    "author": "Authors",
+    "book": "Books",
+    "genre": "Genres",
+    "book_instance": "Book instances",
+    "create_author": "Create new author",
+    "create_genre": "Create new genre",
+    "create_book": "Create new book",
+    "create_book_instance": "Create new book instance",
+    "english": "English",
+    "vietnamese": "Vietnamese"
+  }
+}
