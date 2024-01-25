@@ -1,0 +1,15 @@
+{
+  "home": {
+    "title": "Thu vien dia phuong",
+    "author": "Tac gia",
+    "book": "Sach",
+    "genre": "The loai",
+    "book_instance": "Ban sao sach",
+    "create_author": "Tao moi tac gia",
+    "create_genre": "Tao moi the loai",
+    "create_book": "Tao moi sach",
+    "create_book_instance": "Tao moi ban sao sach",
+    "english": "Tieng Anh",
+    "vietnamese": "Tieng Viet"
+  }
+}
