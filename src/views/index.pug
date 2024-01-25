@@ -2,8 +2,15 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
-  p This is a line with #[em some emphasis] and #[strong strong text] markup.
-  p This line has an un-escaped string: !{'<em> is emphasized</em>'}
-  |, an escaped string: #{'<em> is not emphasized</em>'}
-  |, and escaped variables: #{title}.
+  p #{t('home.welcome', {title: title})}
+
+  h1 #{t('home.content')}
+
+  p #{t('home.record_infor')}
+
+  ul
+    li #[strong #{t('home.book')}] !{num_books}
+    li #[strong #{t('home.bookinstance')}] !{num_bookinstances}
+    li #[strong #{t('home.available_bookinstance')}] !{num_available_bookinstances}
+    li #[strong #{t('home.author')}] !{num_authors}
+    li #[strong #{t('home.genre')}] !{num_genres}

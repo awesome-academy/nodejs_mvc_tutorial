@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import { setupViewEngine } from "./utils/view";
-import { initDatabase } from "./utils/database";
 import genreRouter from "./routes/genre.routes";
 import authorRouter from "./routes/author.routes";
 import bookRouter from "./routes/book.routes";
@@ -9,6 +8,7 @@ import i18next from "i18next";
 import i18nextMiddleware from "i18next-http-middleware";
 import i18nextBackend from "i18next-fs-backend";
 import path from "path";
+import * as bookController from "./controllers/book.controller";
 
 i18next
   .use(i18nextBackend)
@@ -34,11 +34,23 @@ i18next
 
 const app = express();
 setupViewEngine(app);
-initDatabase();
 app.use(i18nextMiddleware.handle(i18next));
+
+// Use jquery, bootstrap
+app.use(
+  "/css",
+  express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))
+);
+app.use("/js", [
+  express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")),
+  express.static(path.join(__dirname, "node_modules/jquery/dist")),
+]);
+// Static files
+app.use(express.static(path.join(__dirname, "public")));
 
 const port: number = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
+app.use("/", bookController.index);
 app.use("/genre", genreRouter);
 app.use("/author", authorRouter);
 app.use("/book", bookRouter);

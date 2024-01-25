@@ -1,15 +1,200 @@
 {
+  "format_datetime": "{{date_val, datetime}}",
+  "not_found": "Not found",
+  "not_available": "N/A",
   "home": {
+    "welcome": "Welcome to {{title}}",
+    "content": "Dynamic content",
+    "record_infor": "The library has the following record counts:",
     "title": "Local library",
-    "author": "Authors",
-    "book": "Books",
-    "genre": "Genres",
-    "book_instance": "Book instances",
+    "all_author": "All Authors",
+    "all_book": "All Books",
+    "all_genre": "All Genres",
+    "all_bookinstance": "All Book instances",
     "create_author": "Create new author",
     "create_genre": "Create new genre",
     "create_book": "Create new book",
     "create_book_instance": "Create new book instance",
     "english": "English",
-    "vietnamese": "Vietnamese"
+    "vietnamese": " Vietnamese",
+    "author": "Authors:",
+    "book": "Books:",
+    "genre": "Genres:",
+    "bookinstance": "Copies:",
+    "available_bookinstance": "Available copies:"
+  },
+  "books": {
+    "attrs": {
+      "title": "Title",
+      "author": "Author",
+      "summary": "Summary",
+      "isbn": "ISBN",
+      "genre": "Genres"
+    },
+    "new": {
+      "title": "Create new book"
+    },
+    "errors": {
+      "title": {
+        "required": "{{title}} must not be empty"
+      },
+      "author": {
+        "required": "{{author}} must not be empty"
+      },
+      "summary": {
+        "required": "{{summary}} must not be empty"
+      },
+      "isbn": {
+        "required": "{{isbn}} must not be empty"
+      }
+    },
+    "form": {
+      "title": "Book title: ",
+      "title_placeholder": "Name of book",
+      "author": "Author:",
+      "summary": "Summary:",
+      "isbn": "ISBN:",
+      "genre": "Genres:",
+      "submit": "Save"
+    },
+    "index": {
+      "title": "Books list",
+      "no_books": "There are no books!"
+    },
+    "show": {
+      "title": "Title: ",
+      "author": "Author: ",
+      "summary": "Summary: ",
+      "isbn": "ISBN: ",
+      "genres": "Genres: ",
+      "no_genre": "N/A",
+      "copies": "Copies",
+      "imprint": "Imprint: ",
+      "due_back": "Due back: ",
+      "no_copies": "There are no copies in this book!",
+      "id": "ID: ",
+      "update": "Update book",
+      "delete": "Delete book"
+    }
+  },
+  "book_instances": {
+    "attrs": {
+      "imprint": "Imprint: ",
+      "status": "Status: ",
+      "due_back": "Due back: ",
+      "id": "ID: "
+    },
+    "form": {
+      "imprint": "Imprint: ",
+      "status": "Status: ",
+      "due_back": "Date when book available: ",
+      "book": "Book:",
+      "submit": "Save"
+    },
+    "new": {
+      "title": "Create new book instance (copies)"
+    },
+    "errors": {
+      "book": {
+        "required": "{{book}} must be specified"
+      },
+      "imprint": {
+        "required": "{{imprint}} must be specified"
+      },
+      "due_back": {
+        "invalid": "{{due_back}} invalid"
+      }
+    },
+    "index": {
+      "title": "Book instances list",
+      "due": " - Due: {{due_back, datetime}}",
+      "updated_at": " - Updated at: {{updated_at}}",
+      "no_book_instances": "There are no book instances!"
+    },
+    "show": {
+      "title": "Title: ",
+      "imprint": "Imprint: ",
+      "status": "Status: ",
+      "due_back": "Due back: ",
+      "id": "ID: "
+    }
+  },
+  "authors": {
+    "attrs": {
+      "first_name": "First name",
+      "family_name": "Family name",
+      "date_of_birth": "Date of birth",
+      "date_of_death": "Date of death"
+    },
+    "errors": {
+      "first_name": {
+        "required": "{{first_name}} must be specified.",
+        "alpha_numeric": "{{first_name}} has non-alphanumeric characters."
+      },
+      "family_name": {
+        "required": "{{family_name}} must be specified.",
+        "alpha_numeric": "{{family_name}} has non-alphanumeric characters."
+      },
+      "date_of_birth": {
+        "invalid": "Invalid {{date_of_birth}}"
+      },
+      "date_of_death": {
+        "invalid": "Invalid {{date_of_death}}"
+      }
+    },
+    "new": {
+      "title": "Create new author"
+    },
+    "form": {
+      "first_name": "First name:",
+      "family_name": "Family name:",
+      "date_of_birth": "Date of birth:",
+      "date_of_death": "Date of death:",
+      "submit": "Save"
+    },
+    "index": {
+      "title": "Authors list",
+      "no_authors": "There are no authors!"
+    },
+    "show": {
+      "author": "Author: ",
+      "books": "Books",
+      "no_books": "This author has no books!"
+    }
+  },
+  "genres": {
+    "attrs": {
+      "name": "Genre name"
+    },
+    "index": {
+      "title": "Genres list",
+      "no_genres": "There are no genres!"
+    },
+    "show": {
+      "title": "Genre detail",
+      "no_books": "This genre has no books!",
+      "books": "Books",
+      "book_table": {
+        "no": "No.",
+        "title": "Title",
+        "summary": "Summary"
+      }
+    },
+    "new": {
+      "title": "Create new genre"
+    },
+    "create": {
+      "exist_genre": "Genre with same name already exists!",
+      "errors": {
+        "name": {
+          "min_length": "{{genre_name}} must be at least 3 characters"
+        }
+      }
+    },
+    "form": {
+      "genre_name": "Genre:",
+      "submit": "Save",
+      "placeholder_name": "Fantasy, Poetry etc."
+    }
   }
 }
