@@ -1,9 +1,22 @@
 import { Request, Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
+import { AppDataSource } from "../data-source";
+import { Genre } from "../models/database/Genre";
 
 const genreList = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    res.send("genre list");
+    const genres = await AppDataSource.getRepository(Genre).find({
+      order: {
+        name: "ASC",
+      },
+    });
+
+    console.log(genres);
+
+    res.render("genres/index", {
+      genres,
+      title: req.t("genres.index.title"),
+    });
   }
 );
 

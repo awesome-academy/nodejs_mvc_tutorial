@@ -4,6 +4,8 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Book } from "./Book";
 
@@ -22,7 +24,11 @@ export class BookInstance {
   })
   status!: "Available" | "Maintenance" | "Loaned" | "Reserved";
 
-  @Column({ type: "date", default: () => "CURRENT_TIMESTAMP" })
+  @Column({
+    type: "date",
+    default: () => "CURRENT_TIMESTAMP",
+    name: "due_back",
+  })
   dueBack!: Date;
 
   get url(): string {
@@ -32,4 +38,10 @@ export class BookInstance {
   @ManyToOne(() => Book, (book) => book.bookInstances)
   @JoinColumn({ name: "book_id" })
   book!: Book;
+
+  @CreateDateColumn({ name: "created_at" })
+  createdAt!: Date;
+
+  @UpdateDateColumn({ name: "updated_at" })
+  updatedAt!: Date;
 }

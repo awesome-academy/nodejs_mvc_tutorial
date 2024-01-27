@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+  h1= title
+  ul
+    each item in genres
+      li
+        a(href= item.url) #{item.name}
+    else
+      p= t('genres.index.no_genres')

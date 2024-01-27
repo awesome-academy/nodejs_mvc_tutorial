@@ -50,11 +50,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const port: number = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
+app.use("/genres", genreRouter);
+app.use("/authors", authorRouter);
+app.use("/books", bookRouter);
+app.use("/book-instances", bookInstanceRouter);
 app.use("/", bookController.index);
-app.use("/genre", genreRouter);
-app.use("/author", authorRouter);
-app.use("/book", bookRouter);
-app.use("/book-instance", bookInstanceRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

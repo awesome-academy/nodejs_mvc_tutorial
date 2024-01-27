@@ -39,7 +39,17 @@ const index = asyncHandler(
 
 const bookList = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    res.send(`Book list`);
+    const books = await AppDataSource.getRepository(Book).find({
+      order: {
+        title: "ASC",
+      },
+      relations: ["author"],
+    });
+
+    res.render("books/index", {
+      books,
+      title: req.t("books.index.title"),
+    });
   }
 );
 

@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+  h1= title
+
+  each item in authors
+    ul
+      li
+        a(href= item.url) #{item.fullName}
+        |  (#{item.dateOfBirth || 'N/A'} - #{item.dateOfDeath || 'N/A'})
+  else
+    p= t('authors.index.no_authors')
