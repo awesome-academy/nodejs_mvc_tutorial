@@ -1,9 +1,22 @@
 import { Request, Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
+import { Author } from "../models/database/Author";
+import { AppDataSource } from "../data-source";
 
 const authorList = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    res.send("Author list");
+    const authors = await AppDataSource.getRepository(Author).find({
+      order: {
+        familyName: "ASC",
+      },
+    });
+
+    console.log(authors);
+
+    res.render("authors/index", {
+      authors,
+      title: req.t("authors.index.title"),
+    });
   }
 );
 

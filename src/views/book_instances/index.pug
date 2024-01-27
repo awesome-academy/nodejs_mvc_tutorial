@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  h1= title
+
+  ul
+    each item in book_instances
+      li
+        - var status = item.status;
+
+        a(href=item.url) #{item.book.title} : #{item.imprint} -
+        if status == 'Available'
+          span.text-success= status
+        else if status == 'Maintenance'
+          span.text-danger= status
+        else
+          span.text-warning= status
+
+        if status != 'Available'
+          span !{t('book_instances.index.due', {due_back: new Date(item.due_back)})}
+          span= t('book_instances.index.updatedAt', {updated_at: item.updated_at_formatted})
+    else
+      p= t('book_instances.index.no_book_instances')
