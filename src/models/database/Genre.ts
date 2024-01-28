@@ -17,7 +17,7 @@ export class Genre {
   name!: string;
 
   get url(): string {
-    return `/catalog/genres/${this.id}`;
+    return `/genres/${this.id}`;
   }
 
   @OneToMany(() => GenreBook, (genreBook) => genreBook.genre)

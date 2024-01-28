@@ -42,7 +42,7 @@ export class Author {
   }
 
   get url() {
-    return `/catalog/authors/${this.id}`;
+    return `/authors/${this.id}`;
   }
 
   @OneToMany(() => Book, (book) => book.author)

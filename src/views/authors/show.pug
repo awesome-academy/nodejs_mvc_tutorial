@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+
+  h1 #{t('authors.show.author')} #{author.fullName}
+  p (#{author.dateOfBirth || t('not_available')} - #{author.dateOfDeath || t('not_available')})
+
+  div.margin-top-20.margin-left-20
+
+    h4= t('authors.show.books')
+
+    dl
+      each book in books
+        dt
+          a(href=book.url) #{book.title}
+        dd #{book.summary}
+
+      else
+        p= t('authors.show.no_authors')

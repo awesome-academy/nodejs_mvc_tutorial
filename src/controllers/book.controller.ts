@@ -5,6 +5,12 @@ import { Book } from "../models/database/Book";
 import { Author } from "../models/database/Author";
 import { Genre } from "../models/database/Genre";
 import { BookInstance } from "../models/database/BookInstance";
+import { bookInstanceStatus } from "../utils/constants";
+
+const bookRepository = AppDataSource.getRepository(Book);
+const authorRepository = AppDataSource.getRepository(Author);
+const genreRepository = AppDataSource.getRepository(Genre);
+const bookInstanceRepository = AppDataSource.getRepository(BookInstance);
 
 const index = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -15,11 +21,11 @@ const index = asyncHandler(
       numBookInstances,
       numAvailableBookInstances,
     ] = await Promise.all([
-      AppDataSource.getRepository(Book).count(),
-      AppDataSource.getRepository(Author).count(),
-      AppDataSource.getRepository(Genre).count(),
-      AppDataSource.getRepository(BookInstance).count(),
-      AppDataSource.getRepository(BookInstance).count({
+      bookRepository.count(),
+      authorRepository.count(),
+      genreRepository.count(),
+      bookInstanceRepository.count(),
+      bookInstanceRepository.count({
         where: { status: "Available" },
       }),
     ]);
@@ -55,7 +61,32 @@ const bookList = asyncHandler(
 
 const bookDetail = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    res.send(`Book detail ${req.params.id}`);
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+      const err = new Error("Invalid book ID parameter");
+      res.status(404);
+      return next(err);
+    }
+
+    const book = await AppDataSource.getRepository(Book).findOne({
+      relations: ["author", "genreBooks", "bookInstances", "genreBooks.genre"],
+      where: {
+        id: id,
+      },
+    });
+
+    if (book === null) {
+      const err = new Error("Book not found");
+      res.status(404);
+      return next(err);
+    }
+
+    res.render("books/show", {
+      book,
+      bookInstances: book?.bookInstances,
+      bookGenres: book?.genreBooks,
+      bookInstanceStatuses: bookInstanceStatus,
+    });
   }
 );
 

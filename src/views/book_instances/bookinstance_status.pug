@@ -1,0 +1,7 @@
+mixin book_instance_status(status, statuses)
+  if status == statuses.available
+    p.text-success #{status}
+  else if status == statuses.maintenance
+    p.text-danger #{status}
+  else
+    p.text-warning #{status}

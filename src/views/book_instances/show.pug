@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+
+  h1 #{t('book_instances.show.id')} #{bookInstance.id}
+
+  p #[strong #{t('book_instances.show.title')}]
+    a(href=book.url) #{book.title}
+  p #[strong #{t('book_instances.show.imprint')}] #{bookInstance.imprint}
+
+  p #[strong #{t('book_instances.show.status')}]
+
+  - const status = bookInstance.status;
+  include bookinstance_status
+  + book_instance_status(status, bookInstanceStatuses)
+
+  if status != bookInstanceStatuses.available
+    p #[strong #{t('book_instances.show.due_back')}] !{t('format_datetime', {date_val: bookInstance.dueBack})}

@@ -4,7 +4,7 @@ block content
   h1= title
 
   ul
-    each item in book_instances
+    each item in bookInstances
       li
         - var status = item.status;
 
@@ -17,7 +17,7 @@ block content
           span.text-warning= status
 
         if status != 'Available'
-          span !{t('book_instances.index.due', {due_back: new Date(item.due_back)})}
-          span= t('book_instances.index.updatedAt', {updated_at: item.updated_at_formatted})
+          span !{t('book_instances.index.due', {due_back: new Date(item.dueBack)})}
+          span= t('book_instances.index.updatedAt', {updated_at: item.updatedAt})
     else
       p= t('book_instances.index.no_book_instances')

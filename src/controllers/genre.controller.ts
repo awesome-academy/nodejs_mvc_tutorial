@@ -3,15 +3,15 @@ import asyncHandler from "express-async-handler";
 import { AppDataSource } from "../data-source";
 import { Genre } from "../models/database/Genre";
 
+const genreRepository = AppDataSource.getRepository(Genre);
+
 const genreList = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const genres = await AppDataSource.getRepository(Genre).find({
+    const genres = await genreRepository.find({
       order: {
         name: "ASC",
       },
     });
-
-    console.log(genres);
 
     res.render("genres/index", {
       genres,
@@ -22,7 +22,31 @@ const genreList = asyncHandler(
 
 const genreDetail = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    res.send(`genre detail ${req.params.id}`);
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+      const err = new Error("Invalid genre ID parameter");
+      res.status(404);
+      return next(err);
+    }
+
+    const genre = await genreRepository.findOne({
+      relations: ["genreBooks", "genreBooks.book"],
+      where: {
+        id: id,
+      },
+    });
+
+    if (genre === null) {
+      const err = new Error("Genre not found");
+      res.status(404);
+      return next(err);
+    }
+
+    res.render("genres/show", {
+      genre,
+      books: genre?.genreBooks,
+      title: req.t("genres.show.title"),
+    });
   }
 );
 
