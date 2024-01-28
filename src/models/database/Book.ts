@@ -24,7 +24,7 @@ export class Book {
   summary!: string;
 
   get url(): string {
-    return `/catalog/books/${this.id}`;
+    return `/books/${this.id}`;
   }
 
   @ManyToOne(() => Author, (author) => author.books)

@@ -32,7 +32,7 @@ export class BookInstance {
   dueBack!: Date;
 
   get url(): string {
-    return `/catalog/bookinstances/${this.id}`;
+    return `/book-instances/${this.id}`;
   }
 
   @ManyToOne(() => Book, (book) => book.bookInstances)

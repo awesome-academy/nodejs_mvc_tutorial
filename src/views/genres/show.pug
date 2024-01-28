@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  h1= title
+  h2= genre.name
+
+  div.margin-left-20.margin-top-20
+
+    h4= t('genres.show.books')
+
+    table.table
+      thead
+        tr
+          th= t('genres.show.book_table.no')
+          th= t('genres.show.book_table.title')
+          th= t('genres.show.book_table.summary')
+      tbody
+        each book, idx in books
+          tr
+            td= idx + 1
+            td
+              a(href=book.book.url) #{book.book.title}
+            td #{book.book.summary}
+        else
+          p= t('genres.show.no_books')

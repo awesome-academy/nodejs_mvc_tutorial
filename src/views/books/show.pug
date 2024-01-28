@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+  h1 #{t('books.show.title')} #{book.title}
+
+  p #[strong #{t('books.show.author')}]
+    a(href=book.author.url) #{book.author.fullName}
+  p #[strong #{t('books.show.summary')}] #{book.summary}
+  p #[strong #{t('books.show.isbn')}] #{book.isbn}
+  p #[strong #{t('books.show.genres')}]
+    each val, index in bookGenres
+      a(href=val.genre.url)  #{val.genre.name}
+      if index < bookGenres.length - 1
+        |,
+    else
+      p #{t('books.show.no_genre')}
+
+  div.margin-left-20.margin-top-20
+    h4 #{t('books.show.copies')}
+
+    each val in bookInstances
+      - const status = val.status;
+
+      hr
+      include ../book_instances/bookinstance_status
+      + book_instance_status(status, bookInstanceStatuses)
+
+      p #[strong #{t('books.show.imprint')}] #{val.imprint}
+
+      if status != bookInstanceStatuses.available
+        p #[strong #{t('books.show.due_back')}] !{t('format_datetime', {date_val: new Date(val.dueBack)})}
+
+      p #[strong #{t('books.show.id')}]
+        a(href=val.url) #{val.id}
+
+    else
+      p= t('books.show.no_copies')

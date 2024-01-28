@@ -2,22 +2,23 @@ import { Request, Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
 import { AppDataSource } from "../data-source";
 import { BookInstance } from "../models/database/BookInstance";
+import { bookInstanceStatus } from "../utils/constants";
+
+const bookInstanceRepository = AppDataSource.getRepository(BookInstance);
 
 const bookInstanceList = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const book_instances = await AppDataSource.getRepository(BookInstance).find(
-      {
-        order: {
-          book: {
-            title: "ASC",
-          },
+    const bookInstances = await bookInstanceRepository.find({
+      order: {
+        book: {
+          title: "ASC",
         },
-        relations: ["book"],
-      }
-    );
+      },
+      relations: ["book"],
+    });
 
     res.render("book_instances/index", {
-      book_instances,
+      bookInstances,
       title: req.t("book_instances.index.title"),
     });
   }
@@ -25,7 +26,33 @@ const bookInstanceList = asyncHandler(
 
 const bookInstanceDetail = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    res.send("bookInstance detail");
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+      const err = new Error("Invalid book instance ID parameter");
+      res.status(404);
+      return next(err);
+    }
+
+    const bookInstance = await AppDataSource.getRepository(
+      BookInstance
+    ).findOne({
+      relations: ["book"],
+      where: {
+        id: id,
+      },
+    });
+
+    if (bookInstance === null) {
+      const err = new Error("Book instance not found");
+      res.status(404);
+      return next(err);
+    }
+
+    res.render("book_instances/show", {
+      bookInstance: bookInstance,
+      book: bookInstance?.book,
+      bookInstanceStatuses: bookInstanceStatus,
+    });
   }
 );
 

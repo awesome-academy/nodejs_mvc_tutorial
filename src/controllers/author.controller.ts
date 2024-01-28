@@ -3,15 +3,15 @@ import asyncHandler from "express-async-handler";
 import { Author } from "../models/database/Author";
 import { AppDataSource } from "../data-source";
 
+const authorRepository = AppDataSource.getRepository(Author);
+
 const authorList = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const authors = await AppDataSource.getRepository(Author).find({
+    const authors = await authorRepository.find({
       order: {
         familyName: "ASC",
       },
     });
-
-    console.log(authors);
 
     res.render("authors/index", {
       authors,
@@ -22,7 +22,30 @@ const authorList = asyncHandler(
 
 const authorDetail = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    res.send("Author detail");
+    var id = parseInt(req.params.id);
+    if (isNaN(id)) {
+      const err = new Error("Invalid author ID parameter");
+      res.status(404);
+      return next(err);
+    }
+
+    const author = await authorRepository.findOne({
+      relations: ["books"],
+      where: {
+        id: id,
+      },
+    });
+
+    if (author === null) {
+      const err = new Error("Author not found");
+      res.status(404);
+      return next(err);
+    }
+
+    res.render("authors/show", {
+      author,
+      books: author?.books,
+    });
   }
 );
 
